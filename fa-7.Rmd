@@ -1,0 +1,122 @@
+---
+title: "FA-7, YANG"
+output: html_document
+date: "2023-04-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## EXERCISES 5.1 
+
+**1**. A machine produces memory sticks of varying lengths, distributed uniformly between 2 and 12 mm. Memory sticks longer than 10 mm do not meet   the design criterion, and must be scrapped.
+
+**(a)** Calculate the probability that a memory stick will be scrapped.
+
+
+```{r A}
+a <- 2
+b <- 12
+c <- 10
+g <- 1/(b-a)
+#the memory sticks scrapped when it longer then 10mm
+Pscrapped <- g*(b-c)
+Pscrapped
+```
+
+**(b)** Simulate 50 memory stick lengths and obtain a histogram of the simulated values. Calculate the simulated mean and variance
+
+```{r B}
+memorysticks <- runif(50,min=2, max=12)
+memorysticks
+hist(memorysticks, main="memorysticks")
+```
+
+  Get the mean and variance
+
+```{r Bmean&variance}
+mean <- mean(memorysticks)
+mean
+variance <- var(memorysticks)
+variance
+```
+
+**2**. Students in an electronic engineering laboratory measure current in using an ammeter. Due to several random factors, the measurement X  follows the pdf
+
+  ***F(x) = 0.025x + b, 2 < x < 6***
+                                                 
+**(a)** Show that, for this to be a genuine probability density, b = 0.15.
+ 
+    "∫(0.025x+b)dx" is equal to 1 when integrated over the interval [2, 6]
+  
+    ∫(0.025x+b)dx=0.0125x^2+bx+C 
+   
+    (0.0125*6^2+6b)-(0.0125*2^2+2b)=1
+   
+    1=(0.0125*36+6b)-(0.0125*4+2b)
+   
+    1=0.45+6b-0.05-2b
+   
+    1=0.4+4b
+   
+    so we have b=0.15.
+    
+    
+**(b)** Find the probability that the measurement of the current exceeds 3 A.
+
+    P(X > 3) = ∫(0.025x + 0.15) dx on the interval [3, 6]
+
+```{r 2b}
+z <- 0.0125
+x <- 0.15
+v <- 3
+m <- 6
+PGreaterthen3 <- (z*(m^2)+x*m)-(z*(v^2)+x*v)
+PGreaterthen3
+
+```
+The probability that the measurement of the current exceeds 3 A is 0.7875 or 78.75%.
+
+
+**(c)** Find E(X).
+
+    E(X)=∫(x*(0.025x+0.15)) dx integrates over the interval [2, 6]
+    
+    ∫(0.025*x^2+0.15x)dx=(1/3)*0.025*x^3+0.075x^2+C
+```{r 2c}
+p <- 0.025
+l <- 0.075
+k <- 2
+o <- 6
+EX <- (1/3*p*o^3+l*o^2)-(1/3*p*k^3+l*k^2) 
+EX
+
+```
+So, E(X) ≈ 4.1.
+
+
+**3**. In a radio communications system, the phase difference X between the transmitter and receiver is modeled as having a uniform density in [−π,+π]. Find P(X ≤ 0) and P(X ≤ π∕2)
+
+**f(x) = 1 / (b - a)**
+
+On the interval [−π,+π], the probability density function f(x)=1/(2π).
+
+Find P(X ≤ 0)
+
+We need to compute the integral of f(x) over the interval [−π,0]:
+
+P(X≤0)=∫(1/(2π))dx
+
+(0/(2π))-((-π)/(2π))=π/(2π) =0.5
+
+so P(X≤0)= 0.5
+
+
+Find P(X ≤ π∕2)
+
+P(X≤π∕2)=∫(1/(2π))x on the interval [−π, π∕2]
+
+(π/(4* (2π)))-((-π)/(2* (2π)))=(3π)/(4*(2π))=3/4
+
+so P(X≤π∕2)=3/4
